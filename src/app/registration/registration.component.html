@@ -1,1 +1,10 @@
-<p>registration works!</p>
+<h2>Register for voting</h2>
+
+<p>Input your Ethereum Address</p>
+
+<form (submit)="onSubmit($event)">
+    <input id="address" name="address">
+    <button type="submit">Submit</button>
+ </form>
+
+ <p name="successMessage" (ngModel)="successMessage">{{successMessage}}</p>

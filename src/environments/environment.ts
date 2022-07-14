@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mnemonic: "mouse leave marine long gadget local valley cute cloud they witness erode",
+  nodeUrl: "https://rinkeby.infura.io/v3/df1ede1192984523b5753b16dee363d2",
+  wakandaTokenAddr: "0x4F2c971B5CD6F01c2C3fd44E87FeD20E5cb50BD0"
 };
 
 /*
