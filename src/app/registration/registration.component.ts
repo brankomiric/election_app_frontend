@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Contract } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { environment as env } from 'src/environments/environment';
 import { EthereumService as AccountService } from '../services/blockchain/accounts/ethereum.service';
-import { EthereumService as ConnectionService } from '../services/blockchain/connection/ethreum.service';
+import { EthereumService as ConnectionService } from '../services/blockchain/connection/ethereum.service';
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +12,17 @@ import { EthereumService as ConnectionService } from '../services/blockchain/con
 export class RegistrationComponent implements OnInit {
   tokenContract?: Contract;
   errors: string[] = [];
-  successMessage: string = '';
+  message: string = '';
+
+  private tokenABI = [
+    'function symbol() public view returns (string)',
+    'function name() public view returns (string)',
+    'function decimals() public view returns (uint8)',
+    'function totalSupply() public view returns (uint)',
+    'function balanceOf(address usr) public view returns (uint)',
+    'function transfer(address dst, uint wad) returns (bool)',
+    'function getOneToken(address to)'
+  ];
 
   constructor(
     private accountService: AccountService,
@@ -28,7 +38,8 @@ export class RegistrationComponent implements OnInit {
     const pk = secrets.keys[0].privateKey;
     await this.connectionService.connect(pk);
     this.tokenContract = this.connectionService.getContractInstance(
-      env.wakandaTokenAddr
+      env.wakandaTokenAddr,
+      this.tokenABI
     );
   }
 
@@ -46,12 +57,13 @@ export class RegistrationComponent implements OnInit {
         await tx.wait(1);
         const res = await this.tokenContract['balanceOf'](address);
         console.log(res);
-        this.successMessage = `Congrats! Now you have ${res.toString()} tokens. Follow the link to cast your vote`;
+        this.message = `Congrats! Now you have ${utils.formatEther(res.toString())} tokens. Follow the link to cast your vote`;
       } else {
         throw new Error('Contract initiation failed');
       }
     } catch (err: any) {
       this.errors.push(err);
+      this.message = err;
     }
   }
 }

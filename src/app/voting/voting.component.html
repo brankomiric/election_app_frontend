@@ -1,1 +1,28 @@
-<p>voting works!</p>
+<hr>
+<label for="candidates">Select a candidate:</label>
+
+<select (change)="onCandidateSelection($event)" name="candidates" id="candidates">
+    <option *ngFor="let item of candidates" value="{{item.address}}">{{item.name}}</option>
+</select>
+<br>
+<label for="token">Input WKND Token amount you wish to spend voting</label>
+<input (change)="onNumberInput($event)" type="number" name="token" id="token" min="0">
+<br>
+<label for="token">Your ETH Private Key</label>
+<input (keyup)="onPrivateKeyInput($event)" type="text" name="pk" id="pk">
+<br>
+<button (click)="onVote()" [disabled]="disableVoting">Vote</button>
+<br>
+<p name="completionMessage" (ngModel)="completionMessage">{{completionMessage}}</p>
+
+<hr>
+
+<button (click)="listAll()">List Current State</button>
+<div *ngIf="showCandidatesRank">
+    <ul *ngFor="let c of candidates">
+        <li>Name: {{c.name}}</li>
+        <li>Votes: {{c.votes}}</li>
+        <li>Cult: {{c.cult}}</li>
+        <li>Age: {{c.age}}</li>
+    </ul>
+</div>

@@ -16,7 +16,6 @@ export class EthereumService {
     'function totalSupply() public view returns (uint)',
     'function balanceOf(address usr) public view returns (uint)',
     'function transfer(address dst, uint wad) returns (bool)',
-    'function getOneToken(address to)'
   ];
 
   constructor() {}
@@ -44,8 +43,8 @@ export class EthereumService {
     );
   }
 
-  public getContractInstance(address: string): Contract {
-    return new Contract(address, this.erc20ABI, this.wallet);
+  public getContractInstance(address: string, abi: string[]): Contract {
+    return new Contract(address, abi, this.wallet);
   }
 
   public async getNativeBalance(): Promise<number> {
