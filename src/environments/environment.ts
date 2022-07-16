@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  serverUrl: "http://localhost:3000/election/api/v1/",
   mnemonic:
     'mouse leave marine long gadget local valley cute cloud they witness erode',
   nodeUrl: 'https://rinkeby.infura.io/v3/df1ede1192984523b5753b16dee363d2',
